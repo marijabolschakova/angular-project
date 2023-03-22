@@ -1,0 +1,12 @@
+<section>
+  <ng-container *ngIf="title">
+    <h2>{{ title }}</h2>
+  </ng-container>
+  <div class="movies_thumb">
+    <swiper [config]="config" *ngIf="movies && movies.results && movies.results!.length > 0">
+      <ng-template swiperSlide *ngFor="let m of movies.results">
+        <img routerLink="/{{ m.id }}" src="https://image.tmdb.org/t/p/w200{{ m?.poster_path }}" alt="{{ m.title }}" />
+      </ng-template>
+    </swiper>
+  </div>
+</section>
