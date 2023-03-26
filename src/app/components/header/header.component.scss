@@ -2,4 +2,10 @@ mat-toolbar {
   display: flex;
   justify-content: center;
   background-color: rgb(19, 18, 18);
+  padding: 20px 0;
+}
+
+.mat-icon-button img {
+  width: 40px;
+  height: 40px;
 }

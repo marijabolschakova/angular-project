@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 
 export interface Movies {
   results: (ResultsEntity)[];
@@ -26,23 +25,39 @@ export interface ResultsEntity {
   vote_average: number;
   overview: string;
   release_date: string;
+  budget:number;
+  homepage:string;
+  imdb_id:string;
+  original_lan:string;
+  production_companies:any;
+  production_countries:any;
+  revenue:number;
+  runtime:number;
+  status:string;
+  tagline:string;
+  genre:any;
+  background_image:any;
+  watchprovider:any;
+  reviewList:any;
+  backdropList:any;
+  logoList:any;
+  posterList:any
+  castList:any;
+  crewList:any;
+  similarmovieList:any;
+  recmovieList:any;
+  videoList:any;
 }
+
 export interface Dates {
   maximum: string;
   minimum: string;
 }
 
-
 const enum endpoint {
-  now_playing = '/movie/now_playing',
-  animation = '/movie/12/recommendations', //35
-  adventure = '/movie/74/recommendations',
+  top_rated = '/movie/top_rated',
   upComing = '/movie/upcoming',
-  fantasy = '/movie/22/recommendations',
-  family = '/movie/35/recommendations',
-
-  series = '/tv/top_rated',
-  serieID = '/tv/',
+  popular = '/movie/popular',
   movieID = '/movie/'
 }
 
@@ -53,56 +68,28 @@ const params = new HttpParams()
   providedIn: 'root'
 })
 
-export class tmdbService implements OnInit  {
+export class tmdbService {
   private url = 'https://api.themoviedb.org/3';
 
   constructor(private http: HttpClient) { }
 
-  getNowPlayingMovie(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.now_playing}`, { params })
+  getMovie(id: any): Observable<Movies> {
+    return this.http.get<Movies>(`${this.url}${endpoint.movieID}${id}?&language=en-EN`, { params })
   }
 
-  getAnimation(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.animation}`, { params } )
+  getTopRated(): Observable<Movies> {
+    return this.http.get<Movies>(`${this.url}${endpoint.top_rated}`, { params } )
   }
 
-  getAdventure(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.adventure}`, { params })
+  getPopular(): Observable<Movies> {
+    return this.http.get<Movies>(`${this.url}${endpoint.popular}`, { params })
   }
 
   getUpComing(): Observable<Movies> {
     return this.http.get<Movies>(`${this.url}${endpoint.upComing}`, { params })
   }
 
-  getFantasy(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.fantasy}`, { params })
+  getMovieCredits(id: number | undefined): Observable<any> {
+    return this.http.get(`${this.url}${endpoint.movieID}${id}/credits`, { params })
   }
-
-  getFamily(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.family}`, { params })
-  }
-
-
-  getSimilar(id: any): Observable<any> {
-    return this.http.get<any>(`${this.url}${endpoint.movieID}${id}/similar`, { params })
-  }
-
-  getMovie(id: any): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.movieID}${id}?&language=pt-BR`, { params })
-  }
-
-  getMovieVideo(id: any): Observable<any> {
-    return this.http.get<any>(`${this.url}${endpoint.movieID}${id}/videos`, { params })
-  }
-
-  getSeries(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.series}?&language=pt-BR`, { params })
-  }
-
-  getSeriesVideo(id: any): Observable<any> {
-    return this.http.get<any>(`${this.url}${endpoint.serieID}${id}/videos`, { params })
-  }
-
-  ngOnInit(): void {}
-
 }

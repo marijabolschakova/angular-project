@@ -4,8 +4,15 @@
   </ng-container>
   <div class="movies_thumb">
     <swiper [config]="config" *ngIf="movies && movies.results && movies.results!.length > 0">
-      <ng-template swiperSlide *ngFor="let m of movies.results">
-        <img routerLink="/{{ m.id }}" src="https://image.tmdb.org/t/p/w200{{ m?.poster_path }}" alt="{{ m.title }}" />
+      <ng-template swiperSlide *ngFor="let movie of movies.results">
+        <div
+          class="img"
+          [routerLink]="['/moviedetails', movie.id]"
+        >
+            <img
+              src="https://image.tmdb.org/t/p/w200{{ movie?.poster_path }}"
+              alt="{{ movie.original_title }}"/>
+        </div>
       </ng-template>
     </swiper>
   </div>

@@ -1,25 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandingComponent } from './components/landing/landing.component';
-import { MovieComponent } from './components/movie/movie.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { HomeComponent } from './components/home/home.component';
+import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: LandingComponent,
+    path: 'moviedetails/:id',
+    component: MovieDetailsComponent,
   },
+
   {
-    path: 'movie/:id',
-    component: MovieComponent,
-  },
+    path: "**",
+    component: HomeComponent},
+
   {
     path: '404',
     component: PageNotFoundComponent,
-  },
-  {
-    path: '**',
-    redirectTo: '/404',
   },
 ];
 

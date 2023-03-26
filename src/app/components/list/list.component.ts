@@ -1,11 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Movies } from 'src/app/models/model-api';
-
-
-// import Swiper core and required modules
+import { Component, Input } from '@angular/core';
 import SwiperCore, { SwiperOptions, Autoplay, Navigation, Pagination } from "swiper";
+import {Movies} from "../../core/services/tmdb.service";
 
-// install Swiper modules
 SwiperCore.use([ Autoplay, Navigation, Pagination]);
 
 @Component({
@@ -14,12 +10,13 @@ SwiperCore.use([ Autoplay, Navigation, Pagination]);
   styleUrls: ['./list.component.css']
 })
 
-export class ListComponent implements OnInit  {
+export class ListComponent {
   @Input() movies!: Movies;
   @Input() title!: string;
+
   config: SwiperOptions = {
     spaceBetween: 10,
-    navigation: true,
+    navigation: false,
     scrollbar: { draggable: true },
     autoplay: {
       delay: 2800
@@ -45,9 +42,4 @@ export class ListComponent implements OnInit  {
   };
 
   constructor() { }
-
-  ngOnInit(): void {
-    this.config;
-  }
-
 }

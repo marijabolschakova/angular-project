@@ -1,165 +1,89 @@
-<div #moviedetails class="movie-details">
-  <section class="header">
-    <app-video-header
-      [data]="movieDetails"
-      [background_video]="background_video"
-    ></app-video-header>
-  </section>
+<div class="movie-container">
+ <div
+      class="content__banner"
+      [ngStyle]="{'background-image': 'url(' + headerBGUrl + ')'}">
 
-  <!-- <main id="main">
-    <div class="movie-poster-img">
-      <div
-        *ngIf="movieDetails.poster_path == null; then thenBlock; else elseBlock"
-      ></div>
-      <ng-template #thenBlock
-        ><img src="assets/images/no-image.png" alt="figure" class="no-image"
-      /></ng-template>
-      <ng-template #elseBlock
-        ><img
-          [attr.src]="highqualityImgUrl + movieDetails.poster_path"
-          alt="{{ movieDetails.original_title }}"
-      /></ng-template>
-    </div>
-  </main> -->
+      <div class="overlay"></div>
+    <div class="info-content">
+      <div class="item-title">{{ movie.title }} </div>
 
-  <div class="movie-content">
+      <div class="genre-wrap">
+        <span class="genre" *ngFor="let genre of movie?.genres">
+          {{ genre?.name }}
+        </span>
+      </div>
 
-    <div class="Backdropimages">
-      <app-backdrop [data]="movieDetails"></app-backdrop>
-    </div>
-    <hr />
+      <div class="header-detail">
+        <div class="rating" *ngIf="movie.vote_average">
+          <img src="assets/IMDb-icon.png" alt="" />
 
-    <div class="posterImages">
-      <app-poster [data]="movieDetails"></app-poster>
-    </div>
-    <hr />
-
-    <div class="videos">
-      <app-video [data]="movieDetails"></app-video>
-    </div>
-    <hr />
-
-    <div class="cast-section">
-      <h4 class="movie-heading mt-5">CAST</h4>
-      <h5 class="h5 text-center">Click the Person to know more</h5>
-      <div
-        *ngIf="movieDetails.castList?.length <= 0; then nocast; else castdata"
-      ></div>
-      <ng-template #castdata>
-        <main class="cast">
-          <div
-            class="movie btn-container"
-            *ngFor="let cast_data of movieDetails.castList"
-            [routerLink]="['/persondetails', cast_data.id]"
-          >
-            <app-card [data]="cast_data"></app-card>
-          </div>
-        </main>
-      </ng-template>
-      <ng-template #nocast>
-        <div id="no-record_cast">
-          <h4 class="text-warning text-center">
-            Cast not available for {{ movieDetails.original_title }}
-          </h4>
+          <span *ngIf="movie.vote_average">{{ movie.vote_average }}</span>
         </div>
-      </ng-template>
-    </div>
 
-    <hr />
+        <span *ngIf="movie.runtime" class="badge"
+        >{{ movie.runtime + " min" }}</span>
 
-    <div class="crew-section">
-      <h4 class="movie-heading mt-5">CREW</h4>
-      <h5 class="h5 text-center">Click the Person to know more</h5>
-      <div
-        *ngIf="movieDetails.crewList?.length <= 0; then nocrew; else crewdata"
-      ></div>
-      <ng-template #crewdata>
-        <main class="cast">
-          <div
-            class="movie btn-container"
-            *ngFor="let crew_data of movieDetails.crewList"
-            [routerLink]="['/persondetails', crew_data.id]"
-          >
-            <app-card [data]="crew_data"></app-card>
-          </div>
-        </main>
-      </ng-template>
-      <ng-template #nocrew>
-        <div id="no-record_crew">
-          <h4 class="text-warning text-center">
-            Crew not available for {{ movieDetails.original_title }}
-          </h4>
-        </div>
-      </ng-template>
-    </div>
-    <hr />
-
-    <div class="sim_movies">
-      <h4 class="movie-heading mt-5">RECOMMENDED MOVIES</h4>
-      <h5 class="h5 text-center">Click the movie to know more</h5>
-      <div
-        *ngIf="
-          movieDetails.recmovieList?.length <= 0;
-          then norecmovie;
-          else recmovie
-        "
-      ></div>
-      <ng-template #recmovie>
-        <main class="s_movies">
-          <div
-            class="movie rec-movies"
-            *ngFor="let r_movies of movieDetails.recmovieList"
-            [routerLink]="['/similarmoviesdetails', r_movies.id]"
-          >
-            <app-card [data]="r_movies"></app-card>
-          </div>
-        </main>
-      </ng-template>
-      <ng-template #norecmovie>
-        <div id="no-record_recommended_movies">
-          <h4 class="text-warning text-center">
-            Recommeded movies not available for
-            {{ movieDetails.original_title }}
-          </h4>
-        </div>
-      </ng-template>
-    </div>
-    <hr />
-
-    <div class="sim_movies-section">
-      <h4 class="movie-heading mt-5">SIMILAR MOVIES</h4>
-      <h5 class="h5 text-center">Click the movie to know more</h5>
+        <span *ngIf="movie.release_date" class="badge">{{ movie.release_date | date }}</span>
+      </div>
 
       <div
-        *ngIf="
-          movieDetails.similarmovieList?.length <= 0;
-          then nosimmovie;
-          else simmoviedata
-        "
-      ></div>
-      <ng-template #simmoviedata>
-        <main class="s_movies">
-          <div
-            class="movie sim-movies"
-            *ngFor="let s_movies of movieDetails.similarmovieList"
-            [routerLink]="['/similarmoviesdetails', s_movies.id]"
-          >
-            <app-card [data]="s_movies"></app-card>
-          </div>
-        </main>
-      </ng-template>
-      <ng-template #nosimmovie>
-        <div id="no-record_similar_movies">
-          <h4 class="text-warning text-center">
-            Similar movies not avilable for {{ movieDetails.original_title }}
-          </h4>
+        class="header-detail text-danger"
+        *ngIf="movie.genre">
+        <span
+          *ngFor="let genre of movie.genre; let i = index"
+          class="badge">
+          {{ genre.name }}
+        </span>
+      </div>
+
+      <div
+        class="header-detail"
+        *ngIf="movie.genre_ids">
+        <span *ngFor="let genre of movie.genre_ids; let i = index">
+          {{ genre.name }}
+        </span>
+      </div>
+
+      <div class="overview">
+        <span>{{ movie.tagline }}</span>
+
+        <h2>Description</h2>
+
+        <p>{{movie.overview}}</p>
+      </div>
+    </div>
+</div>
+
+  <h3>Cast</h3>
+
+  <swiper [config]="config">
+    <ng-template swiperSlide *ngFor="let cast of casts">
+      <a [routerLink]="['/person/', cast.id]" class="cast">
+        <img *ngIf="cast.profile_path; else emptyBackground"
+             src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{cast?.profile_path}}">
+        <div class="cast__info">
+          <h6>{{ cast?.name }}</h6>
+          <span>AS {{ cast.character }}</span>
         </div>
-      </ng-template>
-    </div>
-    <hr />
-    <div class="reviews-section">
-      <app-review [data]="movieDetails"></app-review>
-    </div>
-    
-  </div>
+      </a>
+    </ng-template>
+  </swiper>
+
+  <h3>Crew</h3>
+  <swiper [config]="config">
+    <ng-template swiperSlide *ngFor="let crew of crew">
+      <a [routerLink]="['/person/', crew.id]" class="crew">
+        <img *ngIf="crew.profile_path; else emptyBackground"
+             src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{crew?.profile_path}}">
+        <div class="cast__info">
+          <h6>{{ crew?.name }}</h6>
+          <span>AS {{ crew.job }}</span>
+        </div>
+      </a>
+    </ng-template>
+  </swiper>
+
+  <ng-template #emptyBackground>
+    <img class="empty-background" src="assets/no-image.png" alt="" />
+  </ng-template>
 </div>
