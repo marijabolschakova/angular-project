@@ -2,3 +2,59 @@
   background-color: #111;
   color: #FFF;
 }
+
+.search {
+  position: relative;
+  display: grid;
+  justify-content: flex-start;
+  align-content: center;
+  height: 600px;
+  padding-left: 100px;
+  margin-bottom: 30px;
+}
+
+.search--img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.search--title {
+  z-index: 1;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto 50px;
+  font-family: "Poppins", sans-serif;
+}
+
+h2 {
+  font-size: 3em;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 2em;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.search--input {
+  z-index: 1;
+  max-width: 500px;
+  width: 100%;
+  height: 46px;
+  line-height: 46px;
+  font-size: 1.1em;
+  color: rgba(0,0,0,0.5);
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+}
+
+.section--title {
+  margin: 0 0 0 32px;
+  font-size: 26px;
+  font-weight: bold;
+}

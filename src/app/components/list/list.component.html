@@ -5,14 +5,13 @@
   <div class="movies_thumb">
     <swiper [config]="config" *ngIf="movies && movies.results && movies.results!.length > 0">
       <ng-template swiperSlide *ngFor="let movie of movies.results">
-        <div
+        <a
           class="img"
-          [routerLink]="['/moviedetails', movie.id]"
-        >
+          [routerLink]="['/moviedetails', movie.id]">
             <img
               src="https://image.tmdb.org/t/p/w200{{ movie?.poster_path }}"
               alt="{{ movie.original_title }}"/>
-        </div>
+        </a>
       </ng-template>
     </swiper>
   </div>

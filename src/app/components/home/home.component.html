@@ -1,4 +1,32 @@
 <div class="body">
+
+  <div class="search">
+    <img class="search--img" [src]="searchBanner" alt=""/>
+    <div class="search--title">
+      <h2>Welcome.</h2>
+      <h3>Millions of movies, shows and people.  Explore now.</h3>
+    </div>
+    <input placeholder="Find movies..." id="searchStr" class="search--input" type="text" [ngModel]="searchStr" (ngModelChange)="searchMovies($event)"/>
+  </div>
+
+    <section class="section" *ngIf="searchStr.length > 2 && searchRes">
+      <h2 class="section--title">Founded movies</h2>
+      <div class="movies_thumb">
+        <swiper [config]="config">
+          <ng-template swiperSlide *ngFor="let searchItem of searchRes">
+            <a
+              class="img"
+              [routerLink]="['/moviedetails', searchItem.id]"
+            >
+              <img
+                src="https://image.tmdb.org/t/p/w200{{ searchItem?.poster_path }}"
+                alt="{{ searchItem.title }}"/>
+            </a>
+          </ng-template>
+        </swiper>
+      </div>
+    </section>
+
   <app-list
     [title]="upcomingMoviesTitle"
     [movies]="upComing"

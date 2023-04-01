@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {combineLatest, Observable} from 'rxjs';
 
 export interface Movies {
   results: (ResultsEntity)[];
@@ -58,7 +58,8 @@ const enum endpoint {
   top_rated = '/movie/top_rated',
   upComing = '/movie/upcoming',
   popular = '/movie/popular',
-  movieID = '/movie/'
+  movieID = '/movie/',
+  search = '/search'
 }
 
 const params = new HttpParams()
@@ -72,6 +73,10 @@ export class tmdbService {
   private url = 'https://api.themoviedb.org/3';
 
   constructor(private http: HttpClient) { }
+
+  searchMovies(searchStr: string): Observable<Movies> {
+    return this.http.get<Movies>(`${this.url}${endpoint.search}/movie?api_key=6dcedab3b452574769cef95cc4791224&query=${searchStr}`);
+  }
 
   getMovie(id: any): Observable<Movies> {
     return this.http.get<Movies>(`${this.url}${endpoint.movieID}${id}?&language=en-EN`, { params })

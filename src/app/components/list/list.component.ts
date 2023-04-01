@@ -17,10 +17,6 @@ export class ListComponent {
   config: SwiperOptions = {
     spaceBetween: 10,
     navigation: false,
-    scrollbar: { draggable: true },
-    autoplay: {
-      delay: 2800
-    },
     loop: true,
     breakpoints: {
       220: {
