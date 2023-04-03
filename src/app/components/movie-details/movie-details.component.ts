@@ -25,24 +25,22 @@ export class MovieDetailsComponent {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
-      this.getCast(this.id);
-      this.getCrew(this.id);
-      this.ms.getMovie(params['id']).subscribe(res => {
-        this.movie = res;
-        this.headerBGUrl = 'https://image.tmdb.org/t/p/original' + this.movie.backdrop_path;
-      })
+      this.getCredits(this.id);
+      this.getMovieDetails(this.id);
     });
   }
 
-  getCast(id: number | undefined) {
+  getCredits(id: number | undefined) {
     this.ms.getMovieCredits(id).subscribe((res: any) => {
       this.casts = res.cast;
+      this.crew = res.crew;
     });
   }
 
-  getCrew(id: number | undefined) {
-    this.ms.getMovieCredits(id).subscribe((res: any) => {
-      this.crew = res.crew;
+  getMovieDetails(id: number | undefined) {
+    this.ms.getMovie(id).subscribe((res: any) => {
+      this.movie = res;
+      this.headerBGUrl = 'https://image.tmdb.org/t/p/original' + this.movie.backdrop_path;
     });
   }
 
