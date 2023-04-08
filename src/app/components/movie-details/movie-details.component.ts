@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {Component, OnDestroy} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {tmdbService} from "../../core/services/tmdb.service";
 import {SwiperOptions} from "swiper";
+import {map, Observable, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.css'],
 })
-export class MovieDetailsComponent {
+export class MovieDetailsComponent implements OnDestroy {
   public id: number | undefined;
   movie: any = {};
   casts: any = [];
@@ -22,28 +23,27 @@ export class MovieDetailsComponent {
   ) {
   }
 
-  ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      this.id = params['id'];
-      this.getCast(this.id);
-      this.getCrew(this.id);
-      this.ms.getMovie(params['id']).subscribe(res => {
-        this.movie = res;
-        this.headerBGUrl = 'https://image.tmdb.org/t/p/original' + this.movie.backdrop_path;
-      })
-    });
-  }
+  public movieId$: Observable<string> = this.route.params.pipe(
+    map(value => value['id'])
+  )
 
-  getCast(id: number | undefined) {
-    this.ms.getMovieCredits(id).subscribe((res: any) => {
-      this.casts = res.cast;
-    });
-  }
+  public movieDetails = this.movieId$.pipe(
+    switchMap(id => this.ms.getMovie(id))
+  ).subscribe((res: any) => {
+    this.movie = res;
+    this.headerBGUrl = 'https://image.tmdb.org/t/p/original' + this.movie.backdrop_path;
+  })
 
-  getCrew(id: number | undefined) {
-    this.ms.getMovieCredits(id).subscribe((res: any) => {
-      this.crew = res.crew;
-    });
+  public movieCredits = this.movieId$.pipe(
+    switchMap(id => this.ms.getMovieCredits(id))
+  ).subscribe((res: any) => {
+    this.casts = res.cast;
+    this.crew = res.crew;
+  })
+
+  ngOnDestroy(): void {
+    this.movieDetails.unsubscribe();
+    this.movieCredits.unsubscribe();
   }
 
   config: SwiperOptions = {

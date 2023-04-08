@@ -1,18 +1,17 @@
-<section>
-  <ng-container *ngIf="title">
-    <h2>{{ title }}</h2>
-  </ng-container>
-  <div class="movies_thumb">
-    <swiper [config]="config" *ngIf="movies && movies.results && movies.results!.length > 0">
-      <ng-template swiperSlide *ngFor="let movie of movies.results">
-        <a
-          class="img"
-          [routerLink]="['/moviedetails', movie.id]">
-            <img
-              src="https://image.tmdb.org/t/p/w200{{ movie?.poster_path }}"
-              alt="{{ movie.original_title }}"/>
-        </a>
-      </ng-template>
-    </swiper>
-  </div>
-</section>
+<ng-container *ngIf="title">
+  <h2>{{ title }}</h2>
+</ng-container>
+<div class="movies_thumb">
+  <swiper [config]="config" *ngIf="movies && movies.results && movies.results!.length > 0">
+    <ng-template swiperSlide *ngFor="let movie of movies.results">
+      <div
+        class="img"
+        [routerLink]="['/moviedetails', movie.id]"
+      >
+          <img
+            src="https://image.tmdb.org/t/p/w200{{ movie?.poster_path }}"
+            alt="{{ movie.original_title }}"/>
+      </div>
+    </ng-template>
+  </swiper>
+</div>

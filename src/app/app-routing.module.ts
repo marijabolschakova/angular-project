@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
+import {HeaderComponent} from "./components/header/header.component";
 
 const routes: Routes = [
   {
@@ -11,11 +12,12 @@ const routes: Routes = [
   },
 
   {
-    path: "**",
-    component: HomeComponent},
+    path: "",
+    component: HomeComponent
+  },
 
   {
-    path: '404',
+    path: '**',
     component: PageNotFoundComponent,
   },
 ];
