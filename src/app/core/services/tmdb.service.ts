@@ -94,4 +94,12 @@ export class tmdbService {
   getMovieCredits(id: string): Observable<any> {
     return this.http.get(`${this.url}${endpoint.movieID}${id}/credits`)
   }
+
+  getPersonDetail(id: string): Observable<any> {
+    return this.http.get(`${this.url}/person/${id}`);
+  }
+
+  getPersonCast(id: string): Observable<any> {
+    return this.http.get(`${this.url}/person/${id}/movie_credits`);
+  }
 }
