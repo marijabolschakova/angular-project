@@ -91,7 +91,7 @@ export class tmdbService {
     return this.http.get<Movies>(`${this.url}${endpoint.upComing}`)
   }
 
-  getMovieCredits(id: number | undefined): Observable<any> {
+  getMovieCredits(id: string): Observable<any> {
     return this.http.get(`${this.url}${endpoint.movieID}${id}/credits`)
   }
 }
