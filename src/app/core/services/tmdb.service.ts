@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 export interface Movies {
@@ -54,15 +54,17 @@ export interface Dates {
   minimum: string;
 }
 
+export interface Thumbnail {
+  path: string;
+  extension: string;
+}
+
 const enum endpoint {
   top_rated = '/movie/top_rated',
   upComing = '/movie/upcoming',
   popular = '/movie/popular',
   movieID = '/movie/'
 }
-
-const params = new HttpParams()
-  .set('api_key', '6dcedab3b452574769cef95cc4791224')
 
 @Injectable({
   providedIn: 'root'
@@ -74,22 +76,22 @@ export class tmdbService {
   constructor(private http: HttpClient) { }
 
   getMovie(id: any): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.movieID}${id}?&language=en-EN`, { params })
+    return this.http.get<Movies>(`${this.url}${endpoint.movieID}${id}?&language=en-EN`)
   }
 
   getTopRated(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.top_rated}`, { params } )
+    return this.http.get<Movies>(`${this.url}${endpoint.top_rated}`)
   }
 
   getPopular(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.popular}`, { params })
+    return this.http.get<Movies>(`${this.url}${endpoint.popular}`)
   }
 
   getUpComing(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.upComing}`, { params })
+    return this.http.get<Movies>(`${this.url}${endpoint.upComing}`)
   }
 
-  getMovieCredits(id: number | undefined): Observable<any> {
-    return this.http.get(`${this.url}${endpoint.movieID}${id}/credits`, { params })
+  getMovieCredits(id: string): Observable<any> {
+    return this.http.get(`${this.url}${endpoint.movieID}${id}/credits`)
   }
 }
