@@ -1,0 +1,48 @@
+<div class="movie-info">
+  <h2 class="movie-info__title">{{ movie.title }}</h2>
+
+  <div class="backdrop">
+    <img class="movie-info__img" src="https://image.tmdb.org/t/p/original/{{ movie?.backdrop_path }}"
+    alt="">
+  </div>
+</div>
+
+<div class="movie-cast">
+    <div class="movie-cast__section">
+     <h3>Actors</h3>
+
+      <swiper [config]="config">
+        <ng-template swiperSlide *ngFor="let cast of casts">
+          <a [routerLink]="['/person/', cast.id]" class="swiper__link">
+            <img alt="" *ngIf="cast.profile_path; else emptyBackground"
+                 src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{cast?.profile_path}}">
+            <div class="swiper__info">
+              <h6>{{ cast?.name }}</h6>
+              <span>AS {{ cast.character }}</span>
+            </div>
+          </a>
+        </ng-template>
+      </swiper>
+    </div>
+
+    <div class="movie-cast__section">
+      <h3>Crew</h3>
+
+      <swiper [config]="config">
+        <ng-template swiperSlide *ngFor="let crew of crew">
+          <a [routerLink]="['/person/', crew.id]" class="swiper__link">
+            <img alt="" *ngIf="crew.profile_path; else emptyBackground"
+                 src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{crew?.profile_path}}">
+            <div class="swiper__info">
+              <h6>{{ crew?.name }}</h6>
+              <span>AS {{ crew.job }}</span>
+            </div>
+          </a>
+        </ng-template>
+      </swiper>
+
+      <ng-template #emptyBackground>
+        <img class="empty-background" src="assets/no-image.png" alt="" />
+      </ng-template>
+    </div>
+</div>

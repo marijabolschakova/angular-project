@@ -54,32 +54,20 @@
     </div>
 </div>
 
-  <h3>Cast</h3>
-
+  <div class="title-wrapper">
+    <h3>Cast</h3>
+    <a routerLink="cast" class="title__link">see all</a>
+  </div>
   <swiper [config]="config">
     <ng-template swiperSlide *ngFor="let cast of casts">
-      <a [routerLink]="['/person/', cast.id]" class="cast">
+      <div class="swiper__link">
         <img alt="" *ngIf="cast.profile_path; else emptyBackground"
              src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{cast?.profile_path}}">
-        <div class="cast__info">
+        <div class="swiper__info">
           <h6>{{ cast?.name }}</h6>
           <span>AS {{ cast.character }}</span>
         </div>
-      </a>
-    </ng-template>
-  </swiper>
-
-  <h3>Crew</h3>
-  <swiper [config]="config">
-    <ng-template swiperSlide *ngFor="let crew of crew">
-      <a [routerLink]="['/person/', crew.id]" class="crew">
-        <img alt="" *ngIf="crew.profile_path; else emptyBackground"
-             src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{crew?.profile_path}}">
-        <div class="cast__info">
-          <h6>{{ crew?.name }}</h6>
-          <span>AS {{ crew.job }}</span>
-        </div>
-      </a>
+      </div>
     </ng-template>
   </swiper>
 

@@ -50,13 +50,12 @@
 
     <swiper [config]="config">
       <ng-template swiperSlide *ngFor="let similar_movies of person_cast">
-        <a class="profile-info__movies--wrapper" [routerLink]="['/moviedetails/', similar_movies.id]">
+        <a class="swiper__link" [routerLink]="['/moviedetails/', similar_movies.id]">
           <img
             alt=""
             *ngIf="similar_movies?.poster_path; else emptyBackground"
-            class="person-info__movies--img"
             src="https://image.tmdb.org/t/p/original/{{similar_movies?.poster_path}}">
-          <div class="person-info__movies--title">
+          <div class="swiper__info">
             <h6>{{ similar_movies?.title }}</h6>
           </div>
         </a>

@@ -43,10 +43,6 @@ export class PersonDetailsComponent {
   config: SwiperOptions = {
     spaceBetween: 10,
     navigation: false,
-    scrollbar: { draggable: true },
-    autoplay: {
-      delay: 2800
-    },
     slidesPerView: 'auto',
     loop: true,
     breakpoints: {
@@ -67,5 +63,4 @@ export class PersonDetailsComponent {
       }
     }
   };
-
 }

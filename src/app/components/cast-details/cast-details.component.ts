@@ -1,26 +1,28 @@
 import {Component, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {
+  ActivatedRoute,
+} from '@angular/router';
 import {tmdbService} from "../../core/services/tmdb.service";
-import {SwiperOptions} from "swiper";
 import {map, Observable, switchMap} from "rxjs";
+import {SwiperOptions} from "swiper";
 
 @Component({
-  selector: 'app-movie-details',
-  templateUrl: './movie-details.component.html',
-  styleUrls: ['./movie-details.component.css'],
+  selector: 'cast-details',
+  templateUrl: './cast-details.component.html',
+  styleUrls: ['./cast-details.component.css']
 })
-export class MovieDetailsComponent implements OnDestroy {
+export class CastDetailsComponent implements OnDestroy {
   public id: number | undefined;
   movie: any = {};
   casts: any = [];
+  crew: any = [];
   headerBGUrl!: string;
   overview!: string;
 
   constructor(
     private ms: tmdbService,
     private route: ActivatedRoute,
-  ) {
-  }
+  ) {}
 
   public movieId$: Observable<string> = this.route.params.pipe(
     map(value => value['id'])
@@ -30,13 +32,13 @@ export class MovieDetailsComponent implements OnDestroy {
     switchMap(id => this.ms.getMovie(id))
   ).subscribe((res: any) => {
     this.movie = res;
-    this.headerBGUrl = 'https://image.tmdb.org/t/p/original' + this.movie.backdrop_path;
   })
 
   public movieCredits = this.movieId$.pipe(
     switchMap(id => this.ms.getMovieCredits(id))
   ).subscribe((res: any) => {
     this.casts = res.cast;
+    this.crew = res.crew;
   })
 
   ngOnDestroy(): void {
@@ -47,7 +49,12 @@ export class MovieDetailsComponent implements OnDestroy {
   config: SwiperOptions = {
     spaceBetween: 10,
     navigation: false,
+    scrollbar: { draggable: true },
+    autoplay: {
+      delay: 2800
+    },
     slidesPerView: 'auto',
+    loop: true,
     breakpoints: {
       320: {
         slidesPerView: 2

@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 import {LayoutComponent} from "./layout/layout.component";
 import {PersonDetailsComponent} from "./components/person-details/person-details.component";
+import {CastDetailsComponent} from "./components/cast-details/cast-details.component";
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
       {
         path: 'person/:id',
         component: PersonDetailsComponent,
+      },
+      {
+        path: 'moviedetails/:id/cast',
+        component: CastDetailsComponent,
       },
       {
         path: '**',
