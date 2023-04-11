@@ -7,7 +7,6 @@
       <h2>Welcome.</h2>
       <h3>Millions of movies, shows and people.  Explore now.</h3>
     </div>
-<!--    <input placeholder="Find movies..." id="searchStr" class="search&#45;&#45;input" type="text" [ngModel]="searchStr" (ngModelChange)="searchMovies($event)"/>-->
 
     <input
       type="text"
@@ -18,44 +17,23 @@
   </div>
 
   <ng-container *ngIf="isSearchHidden$ | async">
-    <ng-container *ngIf="(searchResult$ | async) as searchResult">
-      <section class="section" *ngIf="searchResult as searchResultMovies">
-
-        {{searchResultMovies.results}}
+    <ng-container *ngIf="getSearchResult$ | async">
         <h2 class="section--title">Founded movies</h2>
-<!--        <swiper [config]="config">-->
-<!--          <ng-template swiperSlide *ngFor="let searchResult of searchResultMovies; trackBy: trackById">-->
-<!--            <a-->
-<!--              class="img"-->
-<!--              [routerLink]="['/moviedetails', searchResult.id]"-->
-<!--            >-->
-<!--              <img-->
-<!--                src="https://image.tmdb.org/t/p/w200{{ searchResult?.poster_path }}"-->
-<!--                alt="{{ searchResult.title }}"/>-->
-<!--            </a>-->
-<!--          </ng-template>-->
-<!--        </swiper>-->
-      </section>
+        <div class="movies_thumb">
+          <swiper [config]="config">
+            <ng-template swiperSlide *ngFor="let res of searchRes">
+              <a
+                class="img"
+                [routerLink]="['/moviedetails', res.id]">
+                <img
+                  src="https://image.tmdb.org/t/p/w200{{ res?.poster_path }}"
+                  alt="{{ res.title }}"/>
+              </a>
+            </ng-template>
+          </swiper>
+        </div>
     </ng-container>
   </ng-container>
-
-<!--    <section class="section" *ngIf="searchStr.length > 2 && searchRes">-->
-<!--      <h2 class="section&#45;&#45;title">Founded movies</h2>-->
-<!--      <div class="movies_thumb">-->
-<!--        <swiper [config]="config">-->
-<!--          <ng-template swiperSlide *ngFor="let searchItem of searchRes">-->
-<!--            <a-->
-<!--              class="img"-->
-<!--              [routerLink]="['/moviedetails', searchItem.id]"-->
-<!--            >-->
-<!--              <img-->
-<!--                src="https://image.tmdb.org/t/p/w200{{ searchItem?.poster_path }}"-->
-<!--                alt="{{ searchItem.title }}"/>-->
-<!--            </a>-->
-<!--          </ng-template>-->
-<!--        </swiper>-->
-<!--      </div>-->
-<!--    </section>-->
 
   <app-list
     [title]="upcomingMoviesTitle"

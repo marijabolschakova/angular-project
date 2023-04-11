@@ -25,18 +25,15 @@ export class HomeComponent implements OnInit {
   topRated!: Movies;
   popular!: Movies;
   upComing!: Movies;
-
-  private readonly minSearchSymbol = 2;
-
-  // public searchStr = "";
-
-  // searchRes:ResultsEntity[]=[];
+  searchRes!: ResultsEntity[];
 
   searchBanner = "https://www.themoviedb.org/t/p/w1920_and_h600_multi_faces_filter(duotone,00192f,00baff)/6LfVuZBiOOCtqch5Ukspjb9y0EB.jpg";
 
   upcomingMoviesTitle = 'Upcoming Movies';
   trendingMoviesTitle = 'Trending movies';
   popularMoviesTitle = 'Popular movies';
+
+  public searchInput = new FormControl('');
 
   config: SwiperOptions = {
     spaceBetween: 10,
@@ -69,46 +66,26 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subs.push(this.tmdb.getTopRated().subscribe((res: Movies) => this.topRated  =res));
-    this.subs.push(this.tmdb.getPopular().subscribe((res: Movies) => this.popular  =res));
-    this.subs.push(this.tmdb.getUpComing().subscribe((res: Movies) => this.upComing  =res));
+    this.subs.push(this.tmdb.getTopRated().subscribe((res: Movies) => this.topRated = res));
+    this.subs.push(this.tmdb.getPopular().subscribe((res: Movies) => this.popular = res));
+    this.subs.push(this.tmdb.getUpComing().subscribe((res: Movies) => this.upComing = res));
+    this.subs.push(this.getSearchResult$.subscribe((res: Movies) => this.searchRes = res.results ));
   }
-
-  public searchInput = new FormControl('');
-
 
   public isSearchHidden$ = this.searchInput.valueChanges.pipe(
     filter(Boolean),
-    map(value => value.length >= this.minSearchSymbol),
+    map(value => value.length >= 2),
   );
 
-  public searchResult$ = this.searchInput.valueChanges.pipe(
+  public getSearchResult$ = this.searchInput.valueChanges.pipe(
     filter(Boolean),
-    filter((searchString) => searchString.length > this.minSearchSymbol),
+    filter((searchString) => searchString.length > 2),
     debounceTime(200),
     distinctUntilChanged(),
     switchMap((searchString) => this.tmdb.searchMovies(searchString)),
   );
 
-  public trackById(id: number, item: ResultsEntity): number {
-    return item.id;
-  }
-
-
-  // searchMovies(event: any) {
-  //   if (event.length > 2) {
-  //     this.searchStr = event;
-  //     this.tmdb.searchMovies(event).pipe(
-  //       debounceTime(200),
-  //       distinctUntilChanged(),
-  //     ).subscribe(res => {
-  //       this.searchRes = res.results;
-  //     });
-  //   }
-  // }
-
   ngOnDestroy(): void {
     this.subs.forEach(s => s.unsubscribe());
-    // this.searchMovies((res: { unsubscribe: any; }) => res.unsubscribe);
   }
 }
