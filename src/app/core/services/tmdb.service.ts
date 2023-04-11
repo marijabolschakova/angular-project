@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpParams
+} from "@angular/common/http";
 import {Observable} from 'rxjs';
 
 export interface Movies {
@@ -77,7 +80,8 @@ export class tmdbService {
   constructor(private http: HttpClient) { }
 
   searchMovies(searchStr: string): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.search}/movie?api_key=6dcedab3b452574769cef95cc4791224&query=${searchStr}`);
+    const params = new HttpParams({fromString: '&query=' + searchStr});
+    return this.http.get<Movies>(`${this.url}${endpoint.search}/movie`, {params});
   }
 
   getMovie(id: any): Observable<Movies> {
