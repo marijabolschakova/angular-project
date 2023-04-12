@@ -1,6 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {tmdbService} from "../../core/services/tmdb.service";
+import {Cast, Movies, tmdbService} from "../../core/services/tmdb.service";
 import {SwiperOptions} from "swiper";
 import {map, Observable, switchMap} from "rxjs";
 
@@ -11,8 +11,8 @@ import {map, Observable, switchMap} from "rxjs";
 })
 export class MovieDetailsComponent implements OnDestroy {
   public id: number | undefined;
-  movie: any = {};
-  casts: any = [];
+  movie: Movies[] = [];
+  casts: Cast[] = [];
   headerBGUrl!: string;
   overview!: string;
 
@@ -28,14 +28,14 @@ export class MovieDetailsComponent implements OnDestroy {
 
   public movieDetails = this.movieId$.pipe(
     switchMap(id => this.ms.getMovie(id))
-  ).subscribe((res: any) => {
+  ).subscribe((res) => {
     this.movie = res;
     this.headerBGUrl = 'https://image.tmdb.org/t/p/original' + this.movie.backdrop_path;
   })
 
   public movieCredits = this.movieId$.pipe(
     switchMap(id => this.ms.getMovieCredits(id))
-  ).subscribe((res: any) => {
+  ).subscribe((res) => {
     this.casts = res.cast;
   })
 
