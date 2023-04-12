@@ -81,11 +81,12 @@ export class tmdbService {
 
   searchMovies(searchStr: string): Observable<Movies> {
     const params = new HttpParams({fromString: '&query=' + searchStr});
-    return this.http.get<Movies>(`${this.url}${endpoint.search}/movie`, {params});
+    return this.http.get<Movies>(`${this.url}${endpoint.search}/movie`, { params });
   }
 
   getMovie(id: any): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.movieID}${id}?&language=en-EN`)
+    const params = new HttpParams({fromString: '?&language=en-EN'});
+    return this.http.get<Movies>(`${this.url}${endpoint.movieID}${id}`, { params })
   }
 
   getTopRated(): Observable<Movies> {
