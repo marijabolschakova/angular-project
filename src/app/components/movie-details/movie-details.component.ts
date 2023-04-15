@@ -1,6 +1,10 @@
 import {Component, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Cast, Movies, tmdbService} from "../../core/services/tmdb.service";
+import {
+  Cast,
+  Movies,
+  tmdbService
+} from "../../core/services/tmdb.service";
 import {SwiperOptions} from "swiper";
 import {map, Observable, switchMap} from "rxjs";
 
@@ -11,10 +15,10 @@ import {map, Observable, switchMap} from "rxjs";
 })
 export class MovieDetailsComponent implements OnDestroy {
   public id: number | undefined;
-  movie: Movies[] = [];
+  movie: Movies | undefined;
   casts: Cast[] = [];
-  headerBGUrl!: string;
-  overview!: string;
+  headerBGUrl: string | undefined;
+  overview: string | undefined;
 
   constructor(
     private ms: tmdbService,

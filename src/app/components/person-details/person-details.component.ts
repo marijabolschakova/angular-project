@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import {tmdbService} from "../../core/services/tmdb.service";
+import {
+  Cast,
+  tmdbService
+} from "../../core/services/tmdb.service";
 import {ActivatedRoute} from "@angular/router";
 import {SwiperOptions} from "swiper";
 import {map, Observable, switchMap} from "rxjs";
@@ -11,7 +14,7 @@ import {map, Observable, switchMap} from "rxjs";
 })
 export class PersonDetailsComponent {
   public id: number | undefined;
-  person: any;
+  person: Cast | undefined;
   person_cast: any = [];
 
   constructor(
@@ -25,13 +28,13 @@ export class PersonDetailsComponent {
 
   public personDetails = this.personId$.pipe(
     switchMap(id => this.ms.getPersonDetail(id))
-  ).subscribe((res: any) => {
+  ).subscribe((res) => {
     this.person = res;
   })
 
   public personCast = this.personId$.pipe(
     switchMap(id => this.ms.getPersonCast(id))
-  ).subscribe((res: any) => {
+  ).subscribe((res) => {
     this.person_cast = res.cast;
   })
 

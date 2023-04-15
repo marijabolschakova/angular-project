@@ -3,7 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 export interface Movies {
-  results: (ResultsEntity)[];
+  results: (MovieBriefDetails)[];
+  title: string;
+  vote_count: number;
+  poster_path: string;
+  id: number;
+  backdrop_path: string;
+  original_title: string;
+  genres?: Genre[] | null;
+  overview: string;
+  release_date: string;
+  tagline:string;
+  vote_average: number;
+  runtime: number;
+  genre_ids?: Genre[] | null;
   dates: Dates;
   cast: Cast[];
   crew: Cast[];
@@ -21,20 +34,33 @@ export interface Cast {
   character: string;
   credit_id: string;
   job: string;
+  biography: string;
+  birthday: number;
+  deathday: number;
+  place_of_birth: string;
 }
 
-export interface ResultsEntity {
+interface Genre {
+  id: number;
+  name: string;
+}
+
+export interface MovieBriefDetails {
   title: string;
   vote_count: number;
   poster_path: string;
   id: number;
   backdrop_path: string;
   original_title: string;
-  genre_ids?: (number)[] | null;
+  genres?: Genre[] | null;
   overview: string;
   release_date: string;
   tagline:string;
+  vote_average: number;
+  runtime: number;
+  genre_ids?: Genre[] | null;
 }
+
 
 export interface Dates {
   maximum: string;
@@ -62,7 +88,7 @@ export class tmdbService {
 
   constructor(private http: HttpClient) { }
 
-  getMovie(id: any): Observable<Movies> {
+  getMovie(id: string): Observable<Movies> {
     return this.http.get<Movies>(`${this.url}${endpoint.movieID}${id}?&language=en-EN`)
   }
 
@@ -82,8 +108,8 @@ export class tmdbService {
     return this.http.get<Movies>(`${this.url}${endpoint.movieID}${id}/credits`)
   }
 
-  getPersonDetail(id: string): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}/person/${id}`);
+  getPersonDetail(id: string): Observable<Cast> {
+    return this.http.get<Cast>(`${this.url}/person/${id}`);
   }
 
   getPersonCast(id: string): Observable<Movies> {

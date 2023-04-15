@@ -4,11 +4,11 @@
     <div class="person-info__block">
       <div class="overview">
         <h2 class="title">{{person?.name}}</h2>
-        <div class="biography" *ngIf="person.biography">{{person?.biography}}</div>
+        <div class="biography" *ngIf="person?.biography">{{person?.biography}}</div>
       </div>
       <div class="stats">
         <ul class="nolist">
-          <li *ngIf="person.known_for_department">
+          <li *ngIf="person?.known_for_department">
             <div class="label">
               Known For
             </div>
@@ -16,7 +16,7 @@
               {{ person?.known_for_department }}
             </div>
           </li>
-          <li *ngIf="person.birthday">
+          <li *ngIf="person?.birthday">
             <div class="label">
               Born
             </div>
@@ -32,7 +32,7 @@
               {{ person?.deathday  }}
             </div>
           </li>
-          <li *ngIf="person.place_of_birth">
+          <li *ngIf="person?.place_of_birth">
             <div class="label">
               Place of Birth
             </div>

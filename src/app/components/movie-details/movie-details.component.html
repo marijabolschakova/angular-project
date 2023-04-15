@@ -5,7 +5,7 @@
 
       <div class="overlay"></div>
     <div class="info-content">
-      <div class="item-title">{{ movie.title }} </div>
+      <div class="item-title">{{ movie?.title }} </div>
 
       <div class="genre-wrap">
         <span class="genre" *ngFor="let genre of movie?.genres">
@@ -14,42 +14,40 @@
       </div>
 
       <div class="header-detail">
-        <div class="rating" *ngIf="movie.vote_average">
+        <div class="rating" *ngIf="movie?.vote_average">
           <img src="assets/IMDb-icon.png" alt="" />
 
-          <span *ngIf="movie.vote_average">{{ movie.vote_average }}</span>
+          <span *ngIf="movie?.vote_average">{{ movie?.vote_average }}</span>
         </div>
 
-        <span *ngIf="movie.runtime" class="badge"
-        >{{ movie.runtime + " min" }}</span>
+        <span *ngIf="movie?.runtime" class="badge"
+        >{{ movie?.runtime + " min" }}</span>
 
-        <span *ngIf="movie.release_date" class="badge">{{ movie.release_date | date }}</span>
+        <span *ngIf="movie?.release_date" class="badge">{{ movie?.release_date | date }}</span>
       </div>
 
-      <div
-        class="header-detail text-danger"
-        *ngIf="movie.genre">
+      <div class="header-detail text-danger">
         <span
-          *ngFor="let genre of movie.genre; let i = index"
+          *ngFor="let genre of movie?.genres; let i = index"
           class="badge">
-          {{ genre.name }}
+          {{ genre?.name }}
         </span>
       </div>
 
       <div
         class="header-detail"
-        *ngIf="movie.genre_ids">
-        <span *ngFor="let genre of movie.genre_ids; let i = index">
-          {{ genre.name }}
+        *ngIf="movie?.genre_ids">
+        <span *ngFor="let genre of movie?.genre_ids; let i = index">
+          {{ genre?.name }}
         </span>
       </div>
 
       <div class="overview">
-        <span>{{ movie.tagline }}</span>
+        <span>{{ movie?.tagline }}</span>
 
         <h2>Description</h2>
 
-        <p>{{movie.overview}}</p>
+        <p>{{movie?.overview}}</p>
       </div>
     </div>
 </div>
