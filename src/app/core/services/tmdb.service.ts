@@ -75,33 +75,31 @@ const enum endpoint {
 })
 
 export class tmdbService {
-  private url = 'https://api.themoviedb.org/3';
-
   constructor(private http: HttpClient) { }
 
   searchMovies(searchStr: string): Observable<Movies> {
     const params = new HttpParams({fromString: '&query=' + searchStr});
-    return this.http.get<Movies>(`${this.url}${endpoint.search}/movie`, { params });
+    return this.http.get<Movies>(`${endpoint.search}/movie`, { params });
   }
 
   getMovie(id: any): Observable<Movies> {
     const params = new HttpParams({fromString: '?&language=en-EN'});
-    return this.http.get<Movies>(`${this.url}${endpoint.movieID}${id}`, { params })
+    return this.http.get<Movies>(`${endpoint.movieID}${id}`, { params })
   }
 
   getTopRated(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.top_rated}`)
+    return this.http.get<Movies>(`${endpoint.top_rated}`)
   }
 
   getPopular(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.popular}`)
+    return this.http.get<Movies>(`${endpoint.popular}`)
   }
 
   getUpComing(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.upComing}`)
+    return this.http.get<Movies>(`${endpoint.upComing}`)
   }
 
   getMovieCredits(id: string): Observable<any> {
-    return this.http.get(`${this.url}${endpoint.movieID}${id}/credits`)
+    return this.http.get(`${endpoint.movieID}${id}/credits`)
   }
 }
