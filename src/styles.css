@@ -15,3 +15,53 @@ body {
   height: 100%;
   background: #111;
 }
+
+h3 {
+  display: block;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: darkred;
+  text-align: center;
+  margin: 3rem 0 1.5rem;
+}
+
+.empty-background {
+  width: 93%;
+}
+
+.swiper__link {
+  position: relative;
+  width: 200px;
+  height: 270px;
+}
+
+.swiper__link img {
+  height: inherit;
+  border-radius: 10px;
+}
+
+.swiper__info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #FFFFFF;
+  padding: 15px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+@media (min-width: 1024px) {
+  .swiper__link {
+    height: 300px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .swiper__link {
+    height: 370px;
+    width: 250px;
+  }
+}
+

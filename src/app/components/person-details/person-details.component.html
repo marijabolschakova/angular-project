@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="person-info">
+    <img alt="" class="person-info__poster" src="https://image.tmdb.org/t/p/original/{{ person?.profile_path }}">
+    <div class="person-info__block">
+      <div class="overview">
+        <h2 class="title">{{person?.name}}</h2>
+        <div class="biography" *ngIf="person?.biography">{{person?.biography}}</div>
+      </div>
+      <div class="stats">
+        <ul class="nolist">
+          <li *ngIf="person?.known_for_department">
+            <div class="label">
+              Known For
+            </div>
+            <div class="value">
+              {{ person?.known_for_department }}
+            </div>
+          </li>
+          <li *ngIf="person?.birthday">
+            <div class="label">
+              Born
+            </div>
+            <div class="value">
+              {{ person?.birthday  }}
+            </div>
+          </li>
+          <li *ngIf="person?.deathday">
+            <div class="label">
+              Death
+            </div>
+            <div class="value">
+              {{ person?.deathday  }}
+            </div>
+          </li>
+          <li *ngIf="person?.place_of_birth">
+            <div class="label">
+              Place of Birth
+            </div>
+            <div class="value">
+              {{ person?.place_of_birth }}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="person-info__movies" *ngIf="person_cast">
+    <h3>Movies</h3>
+
+    <swiper [config]="config">
+      <ng-template swiperSlide *ngFor="let similar_movies of person_cast">
+        <a class="swiper__link" [routerLink]="['/moviedetails/', similar_movies.id]">
+          <img
+            alt=""
+            *ngIf="similar_movies?.poster_path; else emptyBackground"
+            src="https://image.tmdb.org/t/p/original/{{similar_movies?.poster_path}}">
+          <div class="swiper__info">
+            <h6>{{ similar_movies?.title }}</h6>
+          </div>
+        </a>
+      </ng-template>
+    </swiper>
+
+    <ng-template #emptyBackground>
+      <img class="empty-background" src="assets/no-image.png" alt="" />
+    </ng-template>
+  </div>
+</div>

@@ -3,22 +3,36 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
-import {HeaderComponent} from "./components/header/header.component";
+import {LayoutComponent} from "./layout/layout.component";
+import {PersonDetailsComponent} from "./components/person-details/person-details.component";
+import {CastDetailsComponent} from "./components/cast-details/cast-details.component";
 
 const routes: Routes = [
   {
-    path: 'moviedetails/:id',
-    component: MovieDetailsComponent,
-  },
-
-  {
-    path: "",
-    component: HomeComponent
-  },
-
-  {
-    path: '**',
-    component: PageNotFoundComponent,
+    path: '',
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        component: HomeComponent,
+      },
+      {
+        path: 'moviedetails/:id',
+        component: MovieDetailsComponent,
+      },
+      {
+        path: 'person/:id',
+        component: PersonDetailsComponent,
+      },
+      {
+        path: 'moviedetails/:id/cast',
+        component: CastDetailsComponent,
+      },
+      {
+        path: '**',
+        component: PageNotFoundComponent,
+      },
+    ]
   },
 ];
 
