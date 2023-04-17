@@ -9,9 +9,9 @@ import {Subscription} from "rxjs";
 })
 export class HomeComponent implements OnInit {
   subs: Subscription[] = []
-  topRated!: Movies;
-  popular!: Movies;
-  upComing!: Movies;
+  topRated?: Movies[] = [];
+  popular?: Movies[] = [];
+  upComing?: Movies [] = [];
 
   upcomingMoviesTitle = 'Upcoming Movies';
   trendingMoviesTitle = 'Trending movies';
@@ -21,9 +21,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subs.push(this.tmdb.getTopRated().subscribe((res: Movies) => this.topRated  =res));
-    this.subs.push(this.tmdb.getPopular().subscribe((res: Movies) => this.popular  =res));
-    this.subs.push(this.tmdb.getUpComing().subscribe((res: Movies) => this.upComing  =res));
+    this.subs.push(this.tmdb.getTopRated().subscribe((res: Movies[]) => this.topRated = res));
+    this.subs.push(this.tmdb.getPopular().subscribe((res: Movies[]) => this.popular  =res));
+    this.subs.push(this.tmdb.getUpComing().subscribe((res: Movies[]) => this.upComing  =res));
   }
 
   ngOnDestroy(): void {
