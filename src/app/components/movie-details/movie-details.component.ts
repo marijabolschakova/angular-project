@@ -17,15 +17,31 @@ export class MovieDetailsComponent implements OnDestroy {
   headerBGUrl!: string;
   overview!: string;
 
+  test: string | undefined;
+
   constructor(
     private ms: tmdbService,
     private route: ActivatedRoute,
   ) {
   }
 
+  rateClicked(rate: number): void {
+    this.ms
+      .rateMovie(rate, this.movie.id)
+      .subscribe(id => this.ms.getMovie(id));
+  }
+
   public movieId$: Observable<string> = this.route.params.pipe(
     map(value => value['id'])
   )
+
+  public sessionDetails = this.movieId$.pipe(
+    switchMap(() => this.ms.getSessionId())
+  ).subscribe((res) => {
+    this.test = res.guest_session_id;
+    this.ms.sessionId = this.test;
+    console.log(this.test, 'bla-bla-bla')
+  })
 
   public movieDetails = this.movieId$.pipe(
     switchMap(id => this.ms.getMovie(id))
@@ -44,6 +60,7 @@ export class MovieDetailsComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.movieDetails.unsubscribe();
     this.movieCredits.unsubscribe();
+    this.sessionDetails.unsubscribe();
   }
 
   config: SwiperOptions = {

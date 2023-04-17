@@ -1,6 +1,11 @@
 <app-header></app-header>
 <div class="movie-container">
- <div
+
+  <h3>Rate it !!!</h3>
+  <img alt="" style="width: 50px;
+height: 30px;" src="assets/IMDb-icon.png" *ngFor="let rate of [1,2,3,4,5]" (click)="rateClicked(rate)" />
+
+  <div
       class="content__banner"
       [ngStyle]="{'background-image': 'url(' + headerBGUrl + ')'}">
 
@@ -60,7 +65,7 @@
   <swiper [config]="config">
     <ng-template swiperSlide *ngFor="let cast of casts">
       <a [routerLink]="['/person/', cast.id]" class="cast">
-        <img *ngIf="cast.profile_path; else emptyBackground"
+        <img alt="" *ngIf="cast.profile_path; else emptyBackground"
              src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{cast?.profile_path}}">
         <div class="cast__info">
           <h6>{{ cast?.name }}</h6>
@@ -74,7 +79,7 @@
   <swiper [config]="config">
     <ng-template swiperSlide *ngFor="let crew of crew">
       <a [routerLink]="['/person/', crew.id]" class="crew">
-        <img *ngIf="crew.profile_path; else emptyBackground"
+        <img alt="" *ngIf="crew.profile_path; else emptyBackground"
              src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{crew?.profile_path}}">
         <div class="cast__info">
           <h6>{{ crew?.name }}</h6>

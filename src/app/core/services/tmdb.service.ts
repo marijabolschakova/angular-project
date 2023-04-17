@@ -62,12 +62,18 @@ export interface Thumbnail {
   extension: string;
 }
 
+export interface GuestSessionDetails {
+  expires_at: string;
+  guest_session_id: string;
+  success: boolean;
+}
+
 const enum endpoint {
   top_rated = '/movie/top_rated',
   upComing = '/movie/upcoming',
   popular = '/movie/popular',
   movieID = '/movie/',
-  search = '/search'
+  search = 'search'
 }
 
 @Injectable({
@@ -75,11 +81,30 @@ const enum endpoint {
 })
 
 export class tmdbService {
+  public sessionId = "";
+
   constructor(private http: HttpClient) { }
 
   searchMovies(searchStr: string): Observable<Movies> {
     const params = new HttpParams({fromString: '&query=' + searchStr});
     return this.http.get<Movies>(`${endpoint.search}/movie`, { params });
+  }
+
+  getSessionId(): Observable<GuestSessionDetails> {
+    return this.http.get<GuestSessionDetails>(`/authentication/guest_session/new?`)
+  }
+
+  rateMovie(rate: number, movieId: number) {
+    const body = JSON.stringify({ stars: rate });
+    const params = new HttpParams().set('guest_session_id', this.sessionId)
+
+    return this.http.post(
+      `${movieId}/rating`,
+      body,
+      {
+        params: params
+      }
+    );
   }
 
   getMovie(id: any): Observable<Movies> {
