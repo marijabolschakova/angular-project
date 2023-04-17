@@ -2,8 +2,8 @@
   <h2>{{ title }}</h2>
 </ng-container>
 <div class="movies_thumb">
-  <swiper [config]="config" *ngIf="movies && movies.results && movies.results!.length > 0">
-    <ng-template swiperSlide *ngFor="let movie of movies.results">
+  <swiper [config]="config" *ngIf="movies">
+    <ng-template swiperSlide *ngFor="let movie of movies">
       <div
         class="img"
         [routerLink]="['/moviedetails', movie.id]"

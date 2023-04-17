@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 
 export interface Movies {
   results: (MovieBriefDetails)[];
@@ -92,16 +92,28 @@ export class tmdbService {
     return this.http.get<Movies>(`${this.url}${endpoint.movieID}${id}?&language=en-EN`)
   }
 
-  getTopRated(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.top_rated}`)
+  getTopRated(): Observable<Movies[]> {
+    return this.http.get<{ results: Movies[] }>(`${this.url}${endpoint.top_rated}`).pipe(
+      map(
+        response => response.results
+      ),
+    );
   }
 
-  getPopular(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.popular}`)
+  getPopular(): Observable<Movies[]> {
+    return this.http.get<{ results: Movies[] }>(`${this.url}${endpoint.popular}`).pipe(
+      map(
+        response => response.results
+      ),
+    );
   }
 
-  getUpComing(): Observable<Movies> {
-    return this.http.get<Movies>(`${this.url}${endpoint.upComing}`)
+  getUpComing(): Observable<Movies[]> {
+    return this.http.get<{ results: Movies[] }>(`${this.url}${endpoint.upComing}`).pipe(
+      map(
+        response => response.results
+      ),
+    );
   }
 
   getMovieCredits(id: string): Observable<Movies> {
