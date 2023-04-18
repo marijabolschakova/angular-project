@@ -38,6 +38,8 @@ h3 {
   font-size: 2em;
   font-weight: 600;
   line-height: 1;
+  text-align: left;
+  color: #FFFFFF;
 }
 
 .search--input {

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from "@angular/forms";
 import {
   Movies,
-  ResultsEntity,
   tmdbService
 } from "../../core/services/tmdb.service";
 import {
@@ -25,7 +24,7 @@ export class HomeComponent implements OnInit {
   topRated?: Movies[] = [];
   popular?: Movies[] = [];
   upComing?: Movies [] = [];
-  searchRes!: ResultsEntity[];
+  searchRes?: Movies[] = [];
 
   searchBanner = "https://www.themoviedb.org/t/p/w1920_and_h600_multi_faces_filter(duotone,00192f,00baff)/6LfVuZBiOOCtqch5Ukspjb9y0EB.jpg";
 
@@ -67,9 +66,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.subs.push(this.tmdb.getTopRated().subscribe((res: Movies[]) => this.topRated = res));
-    this.subs.push(this.tmdb.getPopular().subscribe((res: Movies[]) => this.popular  =res));
-    this.subs.push(this.tmdb.getUpComing().subscribe((res: Movies[]) => this.upComing  =res));
-    this.subs.push(this.getSearchResult$.subscribe((res: Movies) => this.searchRes = res.results ));
+    this.subs.push(this.tmdb.getPopular().subscribe((res: Movies[]) => this.popular  = res));
+    this.subs.push(this.tmdb.getUpComing().subscribe((res: Movies[]) => this.upComing  = res));
+    this.subs.push(this.getSearchResult$.subscribe((res: Movies[]) => this.searchRes = res));
   }
 
   public isSearchHidden$ = this.searchInput.valueChanges.pipe(

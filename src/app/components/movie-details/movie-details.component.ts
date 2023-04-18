@@ -30,7 +30,7 @@ export class MovieDetailsComponent implements OnDestroy {
 
   rateClicked(rate: number): void {
     this.ms
-      .rateMovie(rate, this.movie.id)
+      .rateMovie(rate, this.movie?.id)
       .subscribe(id => this.ms.getMovie(id));
   }
 
