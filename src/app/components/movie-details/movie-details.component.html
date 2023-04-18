@@ -1,4 +1,3 @@
-<app-header></app-header>
 <div class="movie-container">
 
   <h3>Rate it !!!</h3>
@@ -11,7 +10,7 @@ height: 30px;" src="assets/IMDb-icon.png" *ngFor="let rate of [1,2,3,4,5]" (clic
 
       <div class="overlay"></div>
     <div class="info-content">
-      <div class="item-title">{{ movie.title }} </div>
+      <div class="item-title">{{ movie?.title }} </div>
 
       <div class="genre-wrap">
         <span class="genre" *ngFor="let genre of movie?.genres">
@@ -20,72 +19,58 @@ height: 30px;" src="assets/IMDb-icon.png" *ngFor="let rate of [1,2,3,4,5]" (clic
       </div>
 
       <div class="header-detail">
-        <div class="rating" *ngIf="movie.vote_average">
+        <div class="rating" *ngIf="movie?.vote_average">
           <img src="assets/IMDb-icon.png" alt="" />
 
-          <span *ngIf="movie.vote_average">{{ movie.vote_average }}</span>
+          <span *ngIf="movie?.vote_average">{{ movie?.vote_average }}</span>
         </div>
 
-        <span *ngIf="movie.runtime" class="badge"
-        >{{ movie.runtime + " min" }}</span>
+        <span *ngIf="movie?.runtime" class="badge"
+        >{{ movie?.runtime + " min" }}</span>
 
-        <span *ngIf="movie.release_date" class="badge">{{ movie.release_date | date }}</span>
+        <span *ngIf="movie?.release_date" class="badge">{{ movie?.release_date | date }}</span>
       </div>
 
-      <div
-        class="header-detail text-danger"
-        *ngIf="movie.genre">
+      <div class="header-detail text-danger">
         <span
-          *ngFor="let genre of movie.genre; let i = index"
+          *ngFor="let genre of movie?.genres; let i = index"
           class="badge">
-          {{ genre.name }}
+          {{ genre?.name }}
         </span>
       </div>
 
       <div
         class="header-detail"
-        *ngIf="movie.genre_ids">
-        <span *ngFor="let genre of movie.genre_ids; let i = index">
-          {{ genre.name }}
+        *ngIf="movie?.genre_ids">
+        <span *ngFor="let genre of movie?.genre_ids; let i = index">
+          {{ genre?.name }}
         </span>
       </div>
 
       <div class="overview">
-        <span>{{ movie.tagline }}</span>
+        <span>{{ movie?.tagline }}</span>
 
         <h2>Description</h2>
 
-        <p>{{movie.overview}}</p>
+        <p>{{movie?.overview}}</p>
       </div>
     </div>
 </div>
 
-  <h3>Cast</h3>
-
+  <div class="title-wrapper">
+    <h3>Cast</h3>
+    <a routerLink="cast" class="title__link">see all</a>
+  </div>
   <swiper [config]="config">
     <ng-template swiperSlide *ngFor="let cast of casts">
-      <a [routerLink]="['/person/', cast.id]" class="cast">
+      <div class="swiper__link">
         <img alt="" *ngIf="cast.profile_path; else emptyBackground"
              src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{cast?.profile_path}}">
-        <div class="cast__info">
+        <div class="swiper__info">
           <h6>{{ cast?.name }}</h6>
           <span>AS {{ cast.character }}</span>
         </div>
-      </a>
-    </ng-template>
-  </swiper>
-
-  <h3>Crew</h3>
-  <swiper [config]="config">
-    <ng-template swiperSlide *ngFor="let crew of crew">
-      <a [routerLink]="['/person/', crew.id]" class="crew">
-        <img alt="" *ngIf="crew.profile_path; else emptyBackground"
-             src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{crew?.profile_path}}">
-        <div class="cast__info">
-          <h6>{{ crew?.name }}</h6>
-          <span>AS {{ crew.job }}</span>
-        </div>
-      </a>
+      </div>
     </ng-template>
   </swiper>
 

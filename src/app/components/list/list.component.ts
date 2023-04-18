@@ -11,7 +11,7 @@ SwiperCore.use([ Autoplay, Navigation, Pagination]);
 })
 
 export class ListComponent {
-  @Input() movies!: Movies;
+  @Input() movies?: Movies[];
   @Input() title!: string;
 
   config: SwiperOptions = {

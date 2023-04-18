@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {map, Observable} from 'rxjs';
 import {
   HttpClient,
   HttpParams
@@ -6,51 +8,64 @@ import {
 import {Observable} from 'rxjs';
 
 export interface Movies {
-  results: (ResultsEntity)[];
-  page: number;
-  total_results: number;
-  dates: Dates;
-  total_pages: number;
-}
-
-export interface ResultsEntity {
-  popularity: number;
+  results: (MovieBriefDetails)[];
+  title: string;
   vote_count: number;
-  video: boolean;
   poster_path: string;
   id: number;
-  adult: boolean;
   backdrop_path: string;
-  original_language: string;
   original_title: string;
-  genre_ids?: (number)[] | null;
-  title: string;
-  vote_average: number;
+  genres?: Genre[] | null;
   overview: string;
   release_date: string;
-  budget:number;
-  homepage:string;
-  imdb_id:string;
-  original_lan:string;
-  production_companies:any;
-  production_countries:any;
-  revenue:number;
-  runtime:number;
-  status:string;
   tagline:string;
-  genre:any;
-  background_image:any;
-  watchprovider:any;
-  reviewList:any;
-  backdropList:any;
-  logoList:any;
-  posterList:any
-  castList:any;
-  crewList:any;
-  similarmovieList:any;
-  recmovieList:any;
-  videoList:any;
+  vote_average: number;
+  runtime: number;
+  genre_ids?: Genre[] | null;
+  dates: Dates;
+  cast: Cast[];
+  crew: Cast[];
 }
+
+export interface Cast {
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path?: string;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  job: string;
+  biography: string;
+  birthday: number;
+  deathday: number;
+  place_of_birth: string;
+}
+
+interface Genre {
+  id: number;
+  name: string;
+}
+
+export interface MovieBriefDetails {
+  title: string;
+  vote_count: number;
+  poster_path: string;
+  id: number;
+  backdrop_path: string;
+  original_title: string;
+  genres?: Genre[] | null;
+  overview: string;
+  release_date: string;
+  tagline:string;
+  vote_average: number;
+  runtime: number;
+  genre_ids?: Genre[] | null;
+}
+
 
 export interface Dates {
   maximum: string;
@@ -112,19 +127,39 @@ export class tmdbService {
     return this.http.get<Movies>(`${endpoint.movieID}${id}`, { params })
   }
 
-  getTopRated(): Observable<Movies> {
-    return this.http.get<Movies>(`${endpoint.top_rated}`)
+  getTopRated(): Observable<Movies[]> {
+    return this.http.get<{ results: Movies[] }>(`${endpoint.top_rated}`).pipe(
+      map(
+        response => response.results
+      ),
+    );
   }
 
-  getPopular(): Observable<Movies> {
-    return this.http.get<Movies>(`${endpoint.popular}`)
+  getPopular(): Observable<Movies[]> {
+    return this.http.get<{ results: Movies[] }>(`${endpoint.popular}`).pipe(
+      map(
+        response => response.results
+      ),
+    );
   }
 
-  getUpComing(): Observable<Movies> {
-    return this.http.get<Movies>(`${endpoint.upComing}`)
+  getUpComing(): Observable<Movies[]> {
+    return this.http.get<{ results: Movies[] }>(`${endpoint.upComing}`).pipe(
+      map(
+        response => response.results
+      ),
+    );
   }
 
-  getMovieCredits(id: string): Observable<any> {
-    return this.http.get(`${endpoint.movieID}${id}/credits`)
+  getMovieCredits(id: string): Observable<Movies> {
+    return this.http.get<Movies>(`}${endpoint.movieID}${id}/credits`)
+  }
+
+  getPersonDetail(id: string): Observable<Cast> {
+    return this.http.get<Cast>(`${this.url}/person/${id}`);
+  }
+
+  getPersonCast(id: string): Observable<Movies> {
+    return this.http.get<Movies>(`${this.url}/person/${id}/movie_credits`);
   }
 }

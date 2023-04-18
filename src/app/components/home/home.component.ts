@@ -22,9 +22,9 @@ import {SwiperOptions} from "swiper";
 })
 export class HomeComponent implements OnInit {
   subs: Subscription[] = []
-  topRated!: Movies;
-  popular!: Movies;
-  upComing!: Movies;
+  topRated?: Movies[] = [];
+  popular?: Movies[] = [];
+  upComing?: Movies [] = [];
   searchRes!: ResultsEntity[];
 
   searchBanner = "https://www.themoviedb.org/t/p/w1920_and_h600_multi_faces_filter(duotone,00192f,00baff)/6LfVuZBiOOCtqch5Ukspjb9y0EB.jpg";
@@ -66,9 +66,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subs.push(this.tmdb.getTopRated().subscribe((res: Movies) => this.topRated = res));
-    this.subs.push(this.tmdb.getPopular().subscribe((res: Movies) => this.popular = res));
-    this.subs.push(this.tmdb.getUpComing().subscribe((res: Movies) => this.upComing = res));
+    this.subs.push(this.tmdb.getTopRated().subscribe((res: Movies[]) => this.topRated = res));
+    this.subs.push(this.tmdb.getPopular().subscribe((res: Movies[]) => this.popular  =res));
+    this.subs.push(this.tmdb.getUpComing().subscribe((res: Movies[]) => this.upComing  =res));
     this.subs.push(this.getSearchResult$.subscribe((res: Movies) => this.searchRes = res.results ));
   }
 
