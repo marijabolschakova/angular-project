@@ -65,3 +65,19 @@ h3 {
   }
 }
 
+.movies_thumb {
+  display: flex;
+  margin: 0px 0px 0px 32px;
+}
+
+.movies_thumb img {
+  transform: scale(0.9);
+  transition: all .3s ease;
+  cursor: pointer;
+  width: 100%;
+}
+
+.movies_thumb img:hover {
+  transform: scale(1);
+}
+

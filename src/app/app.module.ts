@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import {AuthInterceptor} from "./core/http/auth.interceptor";
 import {RouterModule} from "@angular/router";
 import {LayoutModule} from "./layout/layout.module";
+import {UrlInterceptor} from "./core/http/url.interceptor";
 
 @NgModule({
   declarations: [AppComponent],
@@ -12,6 +13,11 @@ import {LayoutModule} from "./layout/layout.module";
     RouterModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UrlInterceptor,
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

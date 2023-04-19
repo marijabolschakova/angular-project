@@ -1,14 +1,14 @@
-import {Injectable} from "@angular/core";
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
+import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 
-const apikey = '6dcedab3b452574769cef95cc4791224';
+const baseUrl = 'https://api.themoviedb.org/3';
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+export class UrlInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req.clone({
-      params: req.params.append('api_key', apikey)
+      url: baseUrl + req.url
     }));
   }
 }
