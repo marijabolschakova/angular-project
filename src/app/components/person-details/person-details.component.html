@@ -1,6 +1,7 @@
 <div class="container">
   <div class="person-info">
-    <img alt="" class="person-info__poster" src="https://image.tmdb.org/t/p/original/{{ person?.profile_path }}">
+    <img alt="" class="person-info__poster"
+         [src]="'original' | imageSource : person?.profile_path">
     <div class="person-info__block">
       <div class="overview">
         <h2 class="title">{{person?.name}}</h2>
@@ -53,10 +54,10 @@
         <a class="swiper__link" [routerLink]="['/moviedetails/', similar_movies.id]">
           <img
             alt=""
-            *ngIf="similar_movies?.poster_path; else emptyBackground"
-            src="https://image.tmdb.org/t/p/original/{{similar_movies?.poster_path}}">
+            *ngIf="similar_movies.poster_path; else emptyBackground"
+            [src]="'original' | imageSource : similar_movies.poster_path">
           <div class="swiper__info">
-            <h6>{{ similar_movies?.title }}</h6>
+            <h6>{{ similar_movies.title }}</h6>
           </div>
         </a>
       </ng-template>
