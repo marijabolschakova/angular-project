@@ -2,7 +2,7 @@
   <h2 class="movie-info__title">{{ movie.title }}</h2>
 
   <div class="backdrop">
-    <img class="movie-info__img" [src]="'original' | imageSource : movie.backdrop_path"
+    <img class="movie-info__img" [src]="movie.backdrop_path | imageSource : 'original'"
     alt="">
   </div>
 </div>
@@ -15,7 +15,7 @@
         <ng-template swiperSlide *ngFor="let cast of casts">
           <a [routerLink]="['/person/', cast.id]" class="swiper__link">
             <img alt="" *ngIf="cast.profile_path; else emptyBackground"
-                 [src]="'w370_and_h556_bestv2' | imageSource : cast.profile_path">
+                 [src]="cast.profile_path | imageSource : 'w370_and_h556_bestv2'">
             <div class="swiper__info">
               <h6>{{ cast?.name }}</h6>
               <span>AS {{ cast.character }}</span>
@@ -32,7 +32,7 @@
         <ng-template swiperSlide *ngFor="let crew of crew">
           <a [routerLink]="['/person/', crew.id]" class="swiper__link">
             <img alt="" *ngIf="crew.profile_path; else emptyBackground"
-            [src]="'w370_and_h556_bestv2' | imageSource : crew.profile_path">
+            [src]="crew.profile_path | imageSource : 'w370_and_h556_bestv2'">
             <div class="swiper__info">
               <h6>{{ crew?.name }}</h6>
               <span>AS {{ crew.job }}</span>

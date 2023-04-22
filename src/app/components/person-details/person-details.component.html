@@ -1,7 +1,7 @@
 <div class="container">
   <div class="person-info">
     <img alt="" class="person-info__poster"
-         [src]="'original' | imageSource : person?.profile_path">
+         [src]="person?.profile_path | imageSource : 'original'">
     <div class="person-info__block">
       <div class="overview">
         <h2 class="title">{{person?.name}}</h2>
@@ -55,7 +55,7 @@
           <img
             alt=""
             *ngIf="similar_movies.poster_path; else emptyBackground"
-            [src]="'original' | imageSource : similar_movies.poster_path">
+            [src]="similar_movies.poster_path | imageSource : 'original' ">
           <div class="swiper__info">
             <h6>{{ similar_movies.title }}</h6>
           </div>

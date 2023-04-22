@@ -8,7 +8,7 @@
         class="img"
         [routerLink]="['/moviedetails', movie.id]">
           <img
-            [src]="'w200' | imageSource : movie.poster_path"
+            [src]="movie.poster_path | imageSource : 'w200'"
             alt="{{ movie.original_title }}"/>
       </a>
     </ng-template>

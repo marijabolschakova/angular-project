@@ -65,7 +65,7 @@ height: 30px;" src="assets/IMDb-icon.png" *ngFor="let rate of [1,2,3,4,5]" (clic
     <ng-template swiperSlide *ngFor="let cast of casts">
       <div class="swiper__link">
         <img alt="" *ngIf="cast.profile_path; else emptyBackground"
-             [src]="'w370_and_h556_bestv2' | imageSource : cast.profile_path">
+             [src]="cast.profile_path | imageSource : 'w370_and_h556_bestv2'">
         <div class="swiper__info">
           <h6>{{ cast?.name }}</h6>
           <span>AS {{ cast.character }}</span>
