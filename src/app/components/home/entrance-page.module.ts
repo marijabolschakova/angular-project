@@ -10,11 +10,12 @@ import {
     FormsModule,
     ReactiveFormsModule
 } from "@angular/forms";
+import {ImageSourceModule} from "../../core/pipe/image-source.module";
 
 @NgModule({
   declarations: [HomeComponent],
   exports: [HomeComponent],
-    imports: [CommonModule, SwiperModule, RouterModule, MovieListModule, TvDetailsModule, HeaderModule, FormsModule, ReactiveFormsModule]
+    imports: [CommonModule, SwiperModule, RouterModule, MovieListModule, TvDetailsModule, HeaderModule, FormsModule, ReactiveFormsModule, ImageSourceModule]
 })
 
 export class EntrancePageModule {}

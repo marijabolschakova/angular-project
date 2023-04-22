@@ -25,7 +25,7 @@
               class="img"
               [routerLink]="['/moviedetails', res.id]">
               <img
-                src="https://image.tmdb.org/t/p/w200/{{ res.poster_path ? res?.poster_path : res?.backdrop_path}}"
+                [src]="res?.poster_path | imageSource : 'w200'"
                 alt="{{ res.title }}"/>
             </a>
           </ng-template>
@@ -40,7 +40,7 @@
               class="img"
               [routerLink]="['/person/', res.id]">
               <img
-                src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{ res?.profile_path }}"
+                [src]="res?.profile_path | imageSource : 'w370_and_h556_bestv2'"
                 alt="{{ res.name }}"/>
             </a>
           </ng-template>
@@ -56,7 +56,7 @@
             [routerLink]="['/tvdetails/', res.id]">
             <p>{{ res?.name }}</p>
             <img
-              src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{ res.poster_path }}"
+              [src]="res?.backdrop_path | imageSource : 'w370_and_h556_bestv2'"
               alt="{{ res.name }}"/>
           </a>
         </ng-template>
