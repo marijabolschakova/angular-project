@@ -63,6 +63,28 @@ export interface GuestSessionDetails {
   success: boolean;
 }
 
+export interface Search {
+  backdrop_path: string;
+  first_air_date?: string;
+  release_date?: string;
+  id: number;
+  name?: string;
+  title?: string;
+  original_name: string;
+  overview: string;
+  media_type: string;
+  popularity: number;
+  poster_path: string;
+  profile_path: string;
+  genres: [{ id: number, name: string }];
+  adult: boolean;
+  gender: number;
+  character: string;
+  department: string;
+  job: string;
+  known_for_department: string;
+}
+
 const enum endpoint {
   top_rated = '/movie/top_rated',
   upComing = '/movie/upcoming',
@@ -80,9 +102,9 @@ export class tmdbService {
 
   constructor(private http: HttpClient) { }
 
-  searchMovies(searchStr: string): Observable<Movies[]> {
+  searchMovies(searchStr: string): Observable<Search[]> {
     const params = new HttpParams({fromString: 'query=' + searchStr});
-    return this.http.get<{ results: Movies[] }>(`${endpoint.search}/movie`, { params }).pipe(
+    return this.http.get<{ results: Search[] }>(`${endpoint.search}/multi`, { params }).pipe(
       map(
         response => response.results
       ),
