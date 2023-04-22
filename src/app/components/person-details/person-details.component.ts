@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {
-  Cast,
+  Cast, Movies,
   tmdbService
 } from "../../core/services/tmdb.service";
 import {ActivatedRoute} from "@angular/router";
@@ -15,7 +15,7 @@ import {map, Observable, switchMap} from "rxjs";
 export class PersonDetailsComponent {
   public id: number | undefined;
   person: Cast | undefined;
-  person_cast: any = [];
+  person_cast: Movies[] = [];
 
   constructor(
     private ms: tmdbService,
@@ -35,7 +35,7 @@ export class PersonDetailsComponent {
   public personCast = this.personId$.pipe(
     switchMap(id => this.ms.getPersonCast(id))
   ).subscribe((res) => {
-    this.person_cast = res.cast;
+    this.person_cast = res;
   })
 
   ngOnDestroy(): void {
