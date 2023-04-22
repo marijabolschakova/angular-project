@@ -52,11 +52,6 @@ export interface Dates {
   minimum: string;
 }
 
-export interface Thumbnail {
-  path: string;
-  extension: string;
-}
-
 export interface GuestSessionDetails {
   expires_at: string;
   guest_session_id: string;
@@ -165,7 +160,11 @@ export class tmdbService {
     return this.http.get<Cast>(`/person/${id}`);
   }
 
-  getPersonCast(id: string): Observable<Movies> {
-    return this.http.get<Movies>(`/person/${id}/movie_credits`);
+  getPersonCast(id: string): Observable<Movies[]> {
+    return this.http.get<{ results: Movies[] }>(`/person/${id}/movie_credits`).pipe(
+      map(
+        response => response.results
+      ),
+    );
   }
 }
