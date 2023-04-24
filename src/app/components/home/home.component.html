@@ -1,15 +1,15 @@
 <div class="body">
 
   <div class="search">
-    <img class="search--img" [src]="searchBanner" alt=""/>
-    <div class="search--title">
+    <img class="search__img" [src]="searchBanner" alt=""/>
+    <div class="search__title">
       <h2>Welcome.</h2>
       <h3>Millions of movies, shows and people.  Explore now.</h3>
     </div>
 
     <input
       type="text"
-      class="search--input"
+      class="search__input"
       name="searchInput"
       [formControl]="searchInput"
       placeholder="Find movies...">
@@ -17,51 +17,49 @@
 
   <ng-container *ngIf="isSearchHidden$ | async">
     <div class="search-result">
-      <h2 class="section--title" *ngIf="searchRes">Founded movies</h2>
+      <h2 class="section-title" *ngIf="searchRes">Results</h2>
       <div class="movies_thumb">
         <swiper [config]="config">
           <ng-template swiperSlide *ngFor="let res of searchRes">
             <a
+              *ngIf="res.media_type === 'movie'"
               class="img"
               [routerLink]="['/moviedetails', res.id]">
               <img
+                *ngIf="res.poster_path; else movieTitle"
                 [src]="res?.poster_path | imageSource : 'w200'"
                 alt="{{ res.title }}"/>
+              <ng-template #movieTitle>
+                <p class="search-result__text">{{ res.title }}</p>
+              </ng-template>
             </a>
-          </ng-template>
-        </swiper>
-      </div>
-
-      <h2 class="section--title" *ngIf="searchRes">Founded people</h2>
-      <div class="movies_thumb">
-        <swiper [config]="config">
-          <ng-template swiperSlide *ngFor="let res of searchRes">
             <a
+              *ngIf="res.media_type === 'person'"
               class="img"
               [routerLink]="['/person/', res.id]">
               <img
+                *ngIf="res.profile_path; else personTitle"
                 [src]="res?.profile_path | imageSource : 'w370_and_h556_bestv2'"
                 alt="{{ res.name }}"/>
+              <ng-template #personTitle>
+                <p class="search-result__text">{{ res.name }}</p>
+              </ng-template>
+            </a>
+            <a
+              *ngIf="res.media_type === 'tv'"
+              class="img"
+              [routerLink]="['/tvdetails/', res.id]">
+              <img
+                *ngIf="res?.backdrop_path; else tvTitle"
+                [src]="res?.backdrop_path | imageSource : 'w370_and_h556_bestv2'"
+                alt="{{ res.name }}"/>
+              <ng-template #tvTitle>
+                <p class="search-result__text">{{ res.name }}</p>
+              </ng-template>
             </a>
           </ng-template>
         </swiper>
       </div>
-
-      <h2 class="section--title" *ngIf="searchRes">Founded TV shows</h2>
-      <div class="movies_thumb">
-      <swiper [config]="config">
-        <ng-template swiperSlide *ngFor="let res of searchRes">
-          <a
-            class="img"
-            [routerLink]="['/tvdetails/', res.id]">
-            <p>{{ res?.name }}</p>
-            <img
-              [src]="res?.backdrop_path | imageSource : 'w370_and_h556_bestv2'"
-              alt="{{ res.name }}"/>
-          </a>
-        </ng-template>
-      </swiper>
-    </div>
     </div>
   </ng-container>
 
