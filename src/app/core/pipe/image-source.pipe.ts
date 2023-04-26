@@ -9,3 +9,10 @@ export class ImageSourcePipe implements PipeTransform {
     return `https://image.tmdb.org/t/p/${size}${name}`;
   }
 }
+
+/*
+of(MY_URL) get
+
+1) <img [src]="item.poster | imageSource: 'original' | async">
+2) <img [imageSource]="item.poster" [imageSize]="original">
+ */

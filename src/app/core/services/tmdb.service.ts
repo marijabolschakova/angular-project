@@ -58,6 +58,36 @@ export interface GuestSessionDetails {
   success: boolean;
 }
 
+export interface BasicSearch {
+  backdrop_path: string;
+  first_air_date?: string;
+  release_date?: string;
+  id: number;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  profile_path: string;
+  genres: [{ id: number, name: string }];
+  adult: boolean;
+  gender: number;
+  character: string;
+  department: string;
+  job: string;
+  known_for_department: string;
+}
+
+export interface TitledSearch extends BasicSearch {
+  media_type: 'movie';
+  title: string;
+}
+export interface NamedSearch extends BasicSearch {
+  media_type: 'tv' | 'person';
+  name: string;
+}
+
+export type Search = NamedSearch | TitledSearch;
+
 const enum endpoint {
   top_rated = '/movie/top_rated',
   upComing = '/movie/upcoming',
@@ -75,9 +105,9 @@ export class tmdbService {
 
   constructor(private http: HttpClient) { }
 
-  searchMovies(searchStr: string): Observable<Movies[]> {
+  searchMovies(searchStr: string): Observable<Search[]> {
     const params = new HttpParams({fromString: 'query=' + searchStr});
-    return this.http.get<{ results: Movies[] }>(`${endpoint.search}/movie`, { params }).pipe(
+    return this.http.get<{ results: Search[] }>(`${endpoint.search}/multi`, { params }).pipe(
       map(
         response => response.results
       ),
@@ -86,19 +116,6 @@ export class tmdbService {
 
   getSessionId(): Observable<GuestSessionDetails> {
     return this.http.get<GuestSessionDetails>(`/authentication/guest_session/new?`)
-  }
-
-  rateMovie(rate: number, movieId: number | undefined) {
-    const body = JSON.stringify({ stars: rate });
-    const params = new HttpParams().set('guest_session_id', this.sessionId)
-
-    return this.http.post(
-      `${movieId}/rating`,
-      body,
-      {
-        params: params
-      }
-    );
   }
 
   getMovie(id: any): Observable<Movies> {

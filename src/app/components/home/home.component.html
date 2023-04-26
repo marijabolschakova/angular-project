@@ -1,35 +1,41 @@
 <div class="body">
 
   <div class="search">
-    <img class="search--img" [src]="searchBanner" alt=""/>
-    <div class="search--title">
+    <img class="search__img" [src]="searchBanner" alt=""/>
+    <div class="search__title">
       <h2>Welcome.</h2>
       <h3>Millions of movies, shows and people.  Explore now.</h3>
     </div>
 
     <input
       type="text"
-      class="search--input"
+      class="search__input"
       name="searchInput"
       [formControl]="searchInput"
       placeholder="Find movies...">
   </div>
 
   <ng-container *ngIf="isSearchHidden$ | async">
-      <h2 class="section--title" *ngIf="searchRes">Founded movies</h2>
+    <div class="search-result">
+      <h2 class="section-title" *ngIf="searchData">Results</h2>
       <div class="movies_thumb">
         <swiper [config]="config">
-          <ng-template swiperSlide *ngFor="let res of searchRes">
+          <ng-template swiperSlide *ngFor="let res of searchData">
             <a
               class="img"
-              [routerLink]="['/moviedetails', res.id]">
+              [routerLink]="[res.link, res?.id]">
               <img
-                src="https://image.tmdb.org/t/p/w200{{ res?.poster_path }}"
+                *ngIf="res.image.path; else titleLInk"
+                [src]="res.image.path | imageSource : res.image.size"
                 alt="{{ res.title }}"/>
+              <ng-template #titleLInk>
+                <p class="search-result__text">{{ res.title }}</p>
+              </ng-template>
             </a>
           </ng-template>
         </swiper>
       </div>
+    </div>
   </ng-container>
 
   <app-list
