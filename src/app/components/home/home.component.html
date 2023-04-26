@@ -17,44 +17,19 @@
 
   <ng-container *ngIf="isSearchHidden$ | async">
     <div class="search-result">
-      <h2 class="section-title" *ngIf="searchRes">Results</h2>
+      <h2 class="section-title" *ngIf="searchData">Results</h2>
       <div class="movies_thumb">
         <swiper [config]="config">
-          <ng-template swiperSlide *ngFor="let res of searchRes">
+          <ng-template swiperSlide *ngFor="let res of searchData">
             <a
-              *ngIf="res.media_type === 'movie'"
               class="img"
-              [routerLink]="['/moviedetails', res.id]">
+              [routerLink]="[res.link, res?.id]">
               <img
-                *ngIf="res.poster_path; else movieTitle"
-                [src]="res?.poster_path | imageSource : 'w200'"
+                *ngIf="res.image.path; else titleLInk"
+                [src]="res.image.path | imageSource : res.image.size"
                 alt="{{ res.title }}"/>
-              <ng-template #movieTitle>
+              <ng-template #titleLInk>
                 <p class="search-result__text">{{ res.title }}</p>
-              </ng-template>
-            </a>
-            <a
-              *ngIf="res.media_type === 'person'"
-              class="img"
-              [routerLink]="['/person/', res.id]">
-              <img
-                *ngIf="res.profile_path; else personTitle"
-                [src]="res?.profile_path | imageSource : 'w370_and_h556_bestv2'"
-                alt="{{ res.name }}"/>
-              <ng-template #personTitle>
-                <p class="search-result__text">{{ res.name }}</p>
-              </ng-template>
-            </a>
-            <a
-              *ngIf="res.media_type === 'tv'"
-              class="img"
-              [routerLink]="['/tvdetails/', res.id]">
-              <img
-                *ngIf="res?.backdrop_path; else tvTitle"
-                [src]="res?.backdrop_path | imageSource : 'w370_and_h556_bestv2'"
-                alt="{{ res.name }}"/>
-              <ng-template #tvTitle>
-                <p class="search-result__text">{{ res.name }}</p>
               </ng-template>
             </a>
           </ng-template>
