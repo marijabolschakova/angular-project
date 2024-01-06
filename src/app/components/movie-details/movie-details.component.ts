@@ -28,12 +28,6 @@ export class MovieDetailsComponent implements OnDestroy {
   ) {
   }
 
-  rateClicked(rate: number): void {
-    this.ms
-      .rateMovie(rate, this.movie?.id)
-      .subscribe(id => this.ms.getMovie(id));
-  }
-
   public movieId$: Observable<string> = this.route.params.pipe(
     map(value => value['id'])
   )

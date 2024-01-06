@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from "@angular/forms";
 import {
   Movies,
+  Search,
   tmdbService
 } from "../../core/services/tmdb.service";
 import {
@@ -14,6 +15,16 @@ import {
 } from "rxjs";
 import {SwiperOptions} from "swiper";
 
+interface SearchViewModel {
+  id: number;
+  link: string;
+  title: string;
+  image: {
+    path: string;
+    size: string;
+  };
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -23,8 +34,8 @@ export class HomeComponent implements OnInit {
   subs: Subscription[] = []
   topRated?: Movies[] = [];
   popular?: Movies[] = [];
-  upComing?: Movies [] = [];
-  searchRes?: Movies[] = [];
+  upComing?: Movies[] = [];
+  searchData: Array<SearchViewModel> = [];
 
   searchBanner = "https://www.themoviedb.org/t/p/w1920_and_h600_multi_faces_filter(duotone,00192f,00baff)/6LfVuZBiOOCtqch5Ukspjb9y0EB.jpg";
 
@@ -68,12 +79,47 @@ export class HomeComponent implements OnInit {
     this.subs.push(this.tmdb.getTopRated().subscribe((res: Movies[]) => this.topRated = res));
     this.subs.push(this.tmdb.getPopular().subscribe((res: Movies[]) => this.popular  = res));
     this.subs.push(this.tmdb.getUpComing().subscribe((res: Movies[]) => this.upComing  = res));
-    this.subs.push(this.getSearchResult$.subscribe((res: Movies[]) => this.searchRes = res));
+    this.subs.push(this.getSearchResult$.subscribe((res: Search[]) => this.searchData = res.map(item => {
+      if(item.media_type === 'movie') {
+        return {
+          id: item.id,
+          link: 'moviedetails',
+          title: item.title,
+          image: {
+            path: item.poster_path,
+            size: 'w200',
+          }
+        }
+      }
+      if(item.media_type === 'person') {
+        return {
+          id: item.id,
+          link: 'person',
+          title: item.name,
+          image: {
+            path: item.profile_path,
+            size: 'w370_and_h556_bestv2',
+          }
+        }
+      }
+      if (item.media_type === 'tv') {
+        return {
+          id: item.id,
+          link: 'tvdetails',
+          title: item.name,
+          image: {
+            path: item.backdrop_path,
+            size: 'w370_and_h556_bestv2',
+          }
+        }
+      }
+      throw new Error('unknown media type =>' + item.media_type);
+    })));
   }
 
   public isSearchHidden$ = this.searchInput.valueChanges.pipe(
     filter(Boolean),
-    map(value => value.length >= 2),
+    map(value => value.length > 2),
   );
 
   public getSearchResult$ = this.searchInput.valueChanges.pipe(
